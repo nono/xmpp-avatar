@@ -1,0 +1,64 @@
+
+
+	    ========================================
+
+		JavaScript XMPP Avatar Retriever
+
+	    ========================================
+
+
+=======================
+        Install
+=======================
+The source code is available here:
+http://linkmauve.fr/avatar/source/code
+
+You can try it by appending a JID after <http://linkmauve.fr/avatar/>,
+like:
+http://linkmauve.fr/avatar/linkmauve@linkmauve.fr
+
+This program requiers the node.js framework, and either the xmpp.js
+library or node-xmpp. You can find these software here:
+http://nodejs.org/
+http://xmppjs.prosody.im/
+https://github.com/astro/node-xmpp
+
+Or if your distribution has these packaged (as in ArchLinux), simply
+install the packaged version.
+
+The config file is configuration.js, in the source directory, and the
+directory for the persistent storage of the avatars is defined in the
+variable config.directory.
+
+configuration.js should contain these two lines, matching the ones in
+your XMPP server:
+ exports.jid = 'avatar.your.xmpp.server.tld';
+ exports.password = 'the shared secret'
+
+When you have the dependances installed, you can simply run:
+ % ./avatar.js
+to launch the component.
+
+There is no install procedure for now.
+
+Please DO report any bug you encounter and ask for any
+feature you want.
+
+=======================
+        Authors
+=======================
+Emmanuel Gil Peyrot (Link Mauve) <linkmauve@linkmauve.fr>
+
+=======================
+    Contact/support
+=======================
+XMPP or SMTP: linkmauve@linkmauve.fr
+
+=======================
+        License
+=======================
+This is Free Software.
+(learn more: http://www.gnu.org/philosophy/free-sw.html)
+
+This is released under the Gnu AGPLv3 license
+Please read the COPYING file for details
