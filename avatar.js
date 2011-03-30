@@ -139,8 +139,14 @@ function onIq(stanza) {
 
 	try {
 		var photo = vCard.getChild('PHOTO', 'vcard-temp');
-		var type = photo.getChild('TYPE', 'vcard-temp').getText();
 		var base64 = photo.getChild('BINVAL', 'vcard-temp').getText();
+
+		try {
+			var type = photo.getChild('TYPE', 'vcard-temp').getText();
+		} catch (e) {
+			res.writeHead(500, {'Content-Type': 'text/plain'});
+			res.end('Error: this user’s vCard doesn’t specify the MIME type of its avatar.');
+		}
 
 		var ext;
 		for (var i in extensions)
