@@ -89,6 +89,15 @@ var jids = {};
 
 var sent = {};
 
+var svgError = function(res, message) {
+	res.writeHead(500, {'Content-Type': 'image/svg+xml'});
+	res.write('<?xml version="1.0" encoding="UTF-8"?>\n');
+	res.write('<svg xmlns="http://www.w3.org/2000/svg" viewBox="-256 -20 512 32">\n');
+	res.write('\t<rect x="-256" y="-20" width="512" height="32" fill="white"/>\n');
+	res.write('\t<text text-anchor="middle">'+message+'</text>\n');
+	res.end('</svg>\n');
+}
+
 var makeError = function(response) {
 	response.attr.type = 'error';
 
@@ -125,15 +134,13 @@ function onIq(stanza) {
 		} catch (e) {
 			var err = 'none';
 		}
-		res.writeHead(500, {'Content-Type': 'text/plain'});
-		res.end('Error during query of this user’s vCard: “'+err+'”.');
+		svgError(res, 'Error during query of this user’s vCard: “'+err+'”.');
 		return;
 	}
 
 	var vCard = stanza.getChild('vCard', 'vcard-temp');
 	if (!vCard) {
-		res.writeHead(500, {'Content-Type': 'text/plain'});
-		res.end('Error: this user doesn’t have a vCard.');
+		svgError(res, 'Error: this user doesn’t have a vCard.');
 		return;
 	}
 
@@ -144,8 +151,8 @@ function onIq(stanza) {
 		try {
 			var type = photo.getChild('TYPE', 'vcard-temp').getText();
 		} catch (e) {
-			res.writeHead(500, {'Content-Type': 'text/plain'});
-			res.end('Error: this user’s vCard doesn’t specify the MIME type of its avatar.');
+			svgError(res, 'Error: this user’s vCard doesn’t specify the MIME type of its avatar.');
+			return;
 		}
 
 		var ext;
@@ -155,8 +162,7 @@ function onIq(stanza) {
 
 		if (ext === undefined) {
 			console.log('Type MIME inconnu : '+type);
-			res.writeHead(500, {'Content-Type': 'text/plain'});
-			res.end('Error: this user’s avatar is in an unknown format.');
+			svgError(res, 'Error: this user’s avatar is in an unknown format.');
 			return;
 		}
 
@@ -167,8 +173,7 @@ function onIq(stanza) {
 			showImage(to, res);
 		});
 	} catch (e) {
-		res.writeHead(500, {'Content-Type': 'text/plain'});
-		res.end('Error: this user doesn’t have an avatar in his/her vCard.');
+		svgError(res, 'Error: this user doesn’t have an avatar in his/her vCard.');
 	}
 }
 
@@ -231,7 +236,7 @@ fs.readdir('data', function(err, files) {
 	if (err)
 		process.exit('1');
 
-	for (i in files) {
+	for (var i in files) {
 		var tab = /(.*)\.([a-z]{3})/.exec(files[i]);
 		jids[tab[1]] = tab[2];
 	}
@@ -260,8 +265,7 @@ http.createServer(function (req, res) {
 		if (re.test(req.url)) {
 			fs.readFile(file, function(err, content) {
 				if (err) {
-					res.writeHead(500, {'Content-Type': 'text/plain'});
-					res.end('Error: ' + (ee.error || file + ' unavailable.'));
+					svgError(res, 'Error: ' + (ee.error || file + ' unavailable.'));
 					return;
 				}
 				res.writeHead(200, {'Content-Type': ee.mime || 'text/plain'});
@@ -290,7 +294,7 @@ http.createServer(function (req, res) {
 		res.write('\t\t\t\t<input type="submit"/>\n');
 		res.write('\t\t\t</p>\n');
 		res.write('\t\t</form>\n');
-		res.write('\t\t<footer><p>(<a href="README">README</a>, <a href="source/code">source code</a>)</p></footer>\n');
+		res.write('\t\t<footer><p>(<a href="README">README</a>, <a href="source/code">source code</a>, <a href="http://hg.linkmauve.fr/avatar">Mercurial repository</a>)</p></footer>\n');
 		res.write('\t</body>\n');
 		res.end('</html>\n');
 		return;
