@@ -26,14 +26,8 @@ https://github.com/astro/node-xmpp
 Or if your distribution has these packaged (as in ArchLinux), simply
 install the packaged version.
 
-The config file is configuration.js, in the source directory, and the
-directory for the persistent storage of the avatars is defined in the
-variable config.directory.
-
-configuration.js should contain these two lines, matching the ones in
-your XMPP server:
- exports.jid = 'avatar.your.xmpp.server.tld';
- exports.password = 'the shared secret'
+The config file is configuration.js, in the source directory. All
+options should be enough documented; if not, contact me.
 
 When you have the dependances installed, you can simply run:
  % ./avatar.js

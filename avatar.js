@@ -318,4 +318,4 @@ http.createServer(function (req, res) {
 	}
 
 	getVCard(jid, res);
-}).listen(8032);
+}).listen(config.webPort);

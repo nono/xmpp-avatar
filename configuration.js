@@ -20,11 +20,28 @@
 
 var config = exports;
 
+// The JID and password of the component, that have to be configured in
+// the host.
 config.jid = 'avatar.example.org';
-config.host = 'localhost';
-config.port = 5347;
 config.password = 'hellohello';
 
+// The hostname or IP address and the port of the XMPP server hosting
+// the component.
+config.host = 'localhost';
+config.port = 5347;
+
+// Root of the webservice, useful if you want to proxy it.
 config.webRoot = '^/avatar/';
-config.directory = 'data'; // Directory of the cache.
-config.guessType = false; // When true, assume that the TYPE of the avatar is image/png if not specified.
+
+// It is the port on which the web service will listen.  If you want a
+// port < 1024, you have to start it as root, use a proxy or redirect
+// it using a firewall like iptables.
+config.webPort = 8032;
+
+// Directory for the cache of the images.
+config.directory = 'data';
+
+// When true, assume that the TYPE of the avatar is image/png if not
+// specified.  Warning: it doesn’t follow the spec and is only a
+// workaround for buggy clients.
+config.guessType = false;
