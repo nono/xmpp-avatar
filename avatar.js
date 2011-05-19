@@ -146,8 +146,12 @@ function onIq(stanza) {
 		try {
 			var type = photo.getChild('TYPE', 'vcard-temp').getText();
 		} catch (e) {
-			svgError(res, 'Error: this user’s vCard doesn’t specify the MIME type of its avatar.');
-			return;
+			if (config.guessType)
+				type = 'image/png'; // FIXME: use magic.
+			else {
+				svgError(res, 'Error: this user’s vCard doesn’t specify the MIME type of its avatar.');
+				return;
+			}
 		}
 
 		var ext;
@@ -155,8 +159,9 @@ function onIq(stanza) {
 			if (type == extensions[i])
 				ext = i;
 
+		// Here we don’t try to guess the extension even if the option is set.
 		if (ext === undefined) {
-			console.log('Type MIME inconnu : '+type);
+			console.log('Unknown MIME type: '+type);
 			svgError(res, 'Error: this user’s avatar is in an unknown format.');
 			return;
 		}
