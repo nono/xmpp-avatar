@@ -24,12 +24,7 @@ var config = require('./configuration');
 
 try {
 	var xmpp = require('node-xmpp');
-	var conn = new xmpp.Component({
-		jid: config.jid,
-		password: config.password,
-		host: 'localhost',
-		port: 5347
-	});
+	var conn = new xmpp.Component(config);
 
 	conn.on('stanza', function (stanza) {
 		if (stanza.is('iq'))
@@ -46,7 +41,7 @@ try {
 	var Element = require('ltx').Element;
 } catch (e) {
 	var xmpp = require('xmpp');
-	var conn = new xmpp.Connection();
+	var conn = new xmpp.Connection(config.host, config.port);
 
 	conn.log = function (_, m) { console.log(m); };
 

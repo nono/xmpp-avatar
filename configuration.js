@@ -21,5 +21,7 @@
 var config = exports;
 
 config.jid = 'avatar.example.org';
+config.host = 'localhost';
+config.port = 5347;
 config.password = 'hellohello';
-config.directory = 'data';
+config.directory = 'data'; // Directory of the cache.
