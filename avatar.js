@@ -239,11 +239,11 @@ fs.readdir('data', function(err, files) {
 });
 
 http.createServer(function (req, res) {
-	console.log('Connection from '+req.client.remoteAddress+' ('+req.headers['user-agent']+') to get “'+req.url+'”.');
+	console.log('Connection from ' + (req.headers['x-forwarded-for'] || req.client.remoteAddress) + ' (' + req.headers['user-agent'] + ') to get “' + req.url + '”.');
 
 	var easterEggs = {
 		source: {
-			re: /^\/avatar\/source\/code$/,
+			re: new RegExp(config.webRoot + 'source/code$'),
 			file: process.argv[1],
 			mime: 'application/ecmascript',
 			error: 'source code unavailable! oO'
@@ -257,7 +257,7 @@ http.createServer(function (req, res) {
 	for (var i in easterEggs) {
 		var ee = easterEggs[i];
 		var file = ee.file || i;
-		var re = ee.re || new RegExp('^/avatar/'+file+'$');
+		var re = ee.re || new RegExp(config.webRoot + file + '$');
 		if (re.test(req.url)) {
 			fs.readFile(file, function(err, content) {
 				if (err) {
@@ -271,7 +271,7 @@ http.createServer(function (req, res) {
 		}
 	}
 
-	var jid = unescape(req.url.replace(/^\/avatar\//, ''));
+	var jid = unescape(req.url.replace(new RegExp(config.webRoot), ''));
 
 	if (jid === '') {
 		res.writeHead(200, {'Content-Type': 'application/xhtml+xml'});

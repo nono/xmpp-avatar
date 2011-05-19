@@ -24,5 +24,7 @@ config.jid = 'avatar.example.org';
 config.host = 'localhost';
 config.port = 5347;
 config.password = 'hellohello';
+
+config.webRoot = '^/avatar/';
 config.directory = 'data'; // Directory of the cache.
 config.guessType = false; // When true, assume that the TYPE of the avatar is image/png if not specified.
