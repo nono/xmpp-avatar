@@ -87,9 +87,10 @@ var sent = {};
 var svgError = function(res, message) {
 	res.writeHead(500, {'Content-Type': 'image/svg+xml'});
 	res.write('<?xml version="1.0" encoding="UTF-8"?>\n');
-	res.write('<svg xmlns="http://www.w3.org/2000/svg" viewBox="-256 -20 512 32">\n');
-	res.write('\t<rect x="-256" y="-20" width="512" height="32" fill="white"/>\n');
-	res.write('\t<text text-anchor="middle">'+message+'</text>\n');
+	res.write('<svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 -36 64 64">\n');
+	res.write('\t<desc>'+message+'</desc>\n');
+	res.write('\t<rect x="-32" y="-36" width="64" height="64" fill="white"/>\n');
+	res.write('\t<text font-family="sans-serif" font-weight="bold" text-anchor="middle">Error</text>\n');
 	res.end('</svg>\n');
 }
 
