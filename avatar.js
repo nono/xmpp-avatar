@@ -194,7 +194,7 @@ function onError(stanza) {
 	conn.send(makeError(response));
 }
 
-var getVCard = function(jid) {
+var getVCard = function(jid, res) {
 	var id = conn.getUniqueId();
 
 	var toSend = new Element('iq', {to: jid, from: config.jid, type: 'get', id: id})
@@ -202,7 +202,7 @@ var getVCard = function(jid) {
 
 	conn.send(toSend);
 
-	return id;
+	sent[id] = res;
 }
 
 var showImage = function(jid, res) {
@@ -221,13 +221,8 @@ var showImage = function(jid, res) {
 		var last = new Date(stats.mtime);
 		var now = new Date();
 
-		if (now - last > 24*60*60*1000) {
-			fs.unlink(file, function() {
-				delete jids[jid];
-				var id = getVCard(jid);
-				sent[id] = res;
-			});
-		}
+		if (now - last > 24*60*60*1000)
+			getVCard(jid, res);
 	});
 	return;
 }
@@ -321,7 +316,5 @@ http.createServer(function (req, res) {
 		return;
 	}
 
-	var id = getVCard(jid);
-
-	sent[id] = res;
+	getVCard(jid, res);
 }).listen(8032);
