@@ -33,9 +33,12 @@ config.port = 5347;
 // Root of the webservice, useful if you want to proxy it.
 config.webRoot = '^/avatar/';
 
-// It is the port on which the web service will listen.  If you want a
-// port < 1024, you have to start it as root, use a proxy or redirect
-// it using a firewall like iptables.
+// These are the host and the port on which the web service will
+// listen.  If you want IPv4 connection only, instead of both IPv4 and
+// IPv6, replace '::' by '0.0.0.0'.  If you want a port < 1024, you
+// have to start it as root, use a proxy or redirect it using a
+// firewall like iptables.
+config.webHost = '::';
 config.webPort = 8032;
 
 // Directory for the cache of the images.
