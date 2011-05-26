@@ -27,8 +27,8 @@ config.password = 'hellohello';
 
 // The hostname or IP address and the port of the XMPP server hosting
 // the component.
-config.host = 'localhost';
-config.port = 5347;
+config.host = 'jabber.fr';
+config.port = 5222;
 
 // Root of the webservice, useful if you want to proxy it.
 config.webRoot = '^/avatar/';

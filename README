@@ -17,11 +17,16 @@ You can try it by appending a JID after <http://linkmauve.fr/avatar/>,
 like:
 http://linkmauve.fr/avatar/linkmauve@linkmauve.fr
 
-This program requiers the node.js framework, and either the xmpp.js
+This program requires the node.js framework, and either the xmpp.js
 library or node-xmpp. You can find these software here:
 http://nodejs.org/
 http://xmppjs.prosody.im/
 https://github.com/astro/node-xmpp
+
+For example, if you are using npm, you can do:
+npm install node-xmpp
+npm install node-stringprep (it depends of libicu-dev on debian)
+npm install ltx
 
 Or if your distribution has these packaged (as in ArchLinux), simply
 install the packaged version.
@@ -31,7 +36,7 @@ configuration.js.example.  You only have to rename it as
 configuration.js and modify it for your needs.  All options should be
 enough documented; if not, contact me.
 
-When you have the dependances installed, you can simply run:
+When you have the dependencies installed, you can simply run:
  % ./avatar.js
 to launch the component.
 
